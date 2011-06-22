@@ -1,0 +1,103 @@
+#!/usr/bin/env node
+// vim: ft=javascript
+
+var utils = require(__dirname + '/../lib/utils.js'),
+    __ = utils.underscore,
+    sys = require('sys'),
+    fs = require('fs'),
+    path = require('path'),
+		args = process.argv.slice(2),
+    arg = args.shift(),
+    fnd = '';
+
+var fu = {
+	'help, h': { desc: 'Help on commands', f: help },
+	'init, i': { desc: 'Create app', f: createApp },
+	'generate, g': { desc: 'Generate [that]', f: generate }
+}
+
+__.keys(fu).forEach(function(k){
+	k.split(', ').forEach(function(kk){
+		if (arg == kk){
+			fnd = k;
+		}
+	});
+});
+
+fu[fnd || 'help, h'].f(args);
+// -- end of parse cmd's
+
+function createApp(prm){
+	'app/model app/controller app/store app/view public/stylesheets config'.split(' ').forEach(createDir);
+	createFileByTemplate('app.js');
+	createFileByTemplate('config/env.js');
+	createFileByTemplate('app/Application.html');
+	if (path.existsSync(process.cwd() + '/public/ext4')){
+		console.log(__.msgExists() +  __.rpad('~public/ext4', 10));
+	}else{
+		console.log(__.msgCreate() +  __.rpad('~public/ext4', 10));
+		fs.symlinkSync('/Users/arrrght/Library/mylibs/ext-4.0.0', process.cwd() + '/public/ext4');
+	}
+}
+
+function createApp_NoDBG(prm){
+	var yes = false;
+	process.stdin.resume();
+	console.log('Are You sure to create App in current dir?');
+	process.stdin.on('data', function (chunk) {
+		chunk = __(new String(chunk)).trim().toLowerCase();
+		process.stdin.pause();
+		'y yes'.split(' ').forEach(function(ans){
+			if(chunk == ans){
+				yes = true;
+			}
+		});
+		if (yes){
+			// create dir
+			'app app/model app/controller app/store app/view public public/stylesheets config'.split(' ').forEach(createDir);
+		}
+	});
+}
+
+function createFileByTemplate(filename, template) {
+	// console.log('createFileByTemplate', filename, template);
+	var text = fs.readFileSync(__dirname + '/../templates/' + (template || filename));
+	createFile(filename, text);
+}
+
+function createFile(filename, content){
+	var filePath = process.cwd() + '/' + filename;
+	if (!path.existsSync(path.dirname(filePath))){ // Create parent
+		createDir(path.dirname(filename));
+	}
+	if(path.existsSync(filePath)){
+		console.log(__.msgExists() +  __.rpad(filename, 10));
+	}else{
+		console.log(__.msgCreate() +  __.rpad(filename, 10));
+		fs.writeFileSync(filePath, content);
+	}
+}
+
+function createDir(dirName){
+	var dir = process.cwd() + '/' + dirName;
+	if (!path.existsSync(path.dirname(dir))){ // Create parent
+		createDir(path.dirname(dirName));
+	}
+	if(path.existsSync(dir)){
+		console.log(__.msgExists() +  __.rpad(dirName, 10));
+	}else{
+		console.log(__.msgCreate() +  __.rpad(dirName, 10));
+		fs.mkdirSync(dir, 0755);
+	}
+}
+
+function help(prm){
+	console.log('h2e4 commands:');
+	__.keys(fu).forEach(function(ck){
+		console.log(__.pad(ck, 11) + ' - ' + fu[ck].desc);
+	});
+}
+
+function generate(){
+	console.log('todo');
+}

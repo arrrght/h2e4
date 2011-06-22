@@ -1,0 +1,17 @@
+{
+	"name": "h2e4",
+	"version": "0.0.1",
+	"author": "Ivan Zvonkov <arrrght@gmail.com> (http://a3e.me)",
+	"description": "Helper for ExtJS 4",
+	"homepage": "http://a3r.me",
+	"engines": [
+		"node >= 0.4.8",
+		"ejs >= 0.4.2",
+		"express >= 2.3.11",
+		"underscore >= 1.1.6",
+		"underscore.string >= 1.1.5",
+		"connect-mongodb >= 0.4.0"
+	],
+	"main": "lib/main",
+	"bin": { "h2e4": "bin/h2e4" }
+}
