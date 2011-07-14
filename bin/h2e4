@@ -32,6 +32,11 @@ function createApp(prm){
 	createFileByTemplate('app.js');
 	createFileByTemplate('config/env.js');
 	createFileByTemplate('app/Application.html');
+	createFileByTemplate('app/view/Viewport.js');
+	createExt4Link();
+}
+
+function createExt4Link(){
 	if (path.existsSync(process.cwd() + '/public/ext4')){
 		console.log(__.msgExists() +  __.rpad('~public/ext4', 10));
 	}else{
@@ -39,7 +44,6 @@ function createApp(prm){
 		fs.symlinkSync('/Users/arrrght/Library/mylibs/ext-4.0.0', process.cwd() + '/public/ext4');
 	}
 }
-
 function createApp_NoDBG(prm){
 	var yes = false;
 	process.stdin.resume();
