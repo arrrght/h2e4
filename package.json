@@ -1,17 +1,29 @@
 {
 	"name": "h2e4",
 	"version": "0.0.1",
-	"author": "Ivan Zvonkov <arrrght@gmail.com> (http://a3e.me)",
+	"author": "Ivan Zvonkov <arrrght@gmail.com> (http://a3r.me)",
 	"description": "Helper for ExtJS 4",
 	"homepage": "http://a3r.me",
-	"engines": [
-		"node >= 0.4.8",
-		"ejs >= 0.4.2",
-		"express >= 2.3.11",
-		"underscore >= 1.1.6",
-		"underscore.string >= 1.1.5",
-		"connect-mongodb >= 0.4.0"
-	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/arrrght/h2e4"
+	},
+	"dependencies": {
+		"ejs": "0.4.x",
+		"express": "2.3.x",
+		"underscore": "1.1.x",
+		"underscore.string": "1.1.x",
+		"connect-mongodb": "0.4.0"
+	},
+	"engines": {
+		"node": "0.4"
+	},
+	"devDependencies": {
+		"vows": "0.5.x"
+  },
+	"scripts": {
+		"test": "vows test/*-test.js --spec"
+  },
 	"main": "lib/main",
 	"bin": { "h2e4": "bin/h2e4" }
 }

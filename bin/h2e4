@@ -13,7 +13,7 @@ var utils = require(__dirname + '/../lib/utils.js'),
 var fu = {
 	'help, h': { desc: 'Help on commands', f: help },
 	'init, i': { desc: 'Create app', f: createApp },
-	'generate, g': { desc: 'Generate [that]', f: generate }
+	'generate, g': { desc: 'Generate [that]', f: generate },
 }
 
 __.keys(fu).forEach(function(k){
@@ -33,6 +33,7 @@ function createApp(prm){
 	createFileByTemplate('config/env.js');
 	createFileByTemplate('app/Application.html');
 	createFileByTemplate('app/view/Viewport.js');
+	createFileByTemplate('app/controller/Ctrl.js');
 	createExt4Link();
 }
 
@@ -44,6 +45,7 @@ function createExt4Link(){
 		fs.symlinkSync('/Users/arrrght/Library/mylibs/ext-4.0.0', process.cwd() + '/public/ext4');
 	}
 }
+
 function createApp_NoDBG(prm){
 	var yes = false;
 	process.stdin.resume();

@@ -20,6 +20,19 @@ vows.describe('Init things').addBatch({
 	},
 
 	'init': {
+		topic: function(){
+			child.exec('rm -R ./testground && mkdir testground', this.callback);
+		},
+		'After recreate testground': {
+			topic: function(){
+				process.chdir('testground');
+				child.exec('h2e4 i', this.callback);
+			},
+			'is some dir created': function(err, stdout, stderr){
+				assert.isNull(err);
+			}
+		},
+		/*
 		'init': function(){
 			child.exec('rm -R ./testground');
 			assert.isFalse(path.existsSync('testground'));
@@ -41,6 +54,7 @@ vows.describe('Init things').addBatch({
 			//console.log(path.existsSync('testground'));
 			//path.existsSync('testground/app').should.not.be.true;
 		}
+		*/
 	}
 
 }).export(module);
